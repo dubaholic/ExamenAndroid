@@ -99,7 +99,7 @@ public class MapActivity extends AppCompatActivity {
                 String searchString = "";
                 try {
                     //haal de invoer van de gebruiker uit het searchfield
-                    searchString = URLEncoder.encode(searchField.getText().toString(), "UTF-8");
+
                     Log.d("debug", "string: " + searchString);
                 }
                 catch (UnsupportedEncodingException e) {
