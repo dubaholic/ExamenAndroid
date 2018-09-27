@@ -3,8 +3,6 @@ package be.ap.edu.veloapplication;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -24,56 +22,14 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends Activity {
 
-
-    // ArrayList for person names, email Id's and mobile numbers
-    ArrayList<String> naam = new ArrayList<>();
-    ArrayList<String> lng = new ArrayList<>();
-    ArrayList<String> lat = new ArrayList<>();
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        // get the reference of RecyclerView
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        // set a LinearLayoutManager with default vertical orientation
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        try {
-            // get JSONObject from JSON file
-            JSONObject obj = new JSONObject(loadJSONFromAsset());
-            // fetch JSONArray named users
-            JSONArray stationArray = obj.getJSONArray("velostation");
-            // implement for loop for getting users list data
-            for (int i = 0; i < stationArray.length(); i++) {
-                // create a JSONObject for fetching single user data
-                JSONObject velostationDetail = stationArray.getJSONObject(i);
-                // fetch email and name and store it in arraylist
-                naam.add(velostationDetail.getString("naam"));
-                lng.add(velostationDetail.getString("lng"));
-                lat.add(velostationDetail.getString("lat"));
-                // create a object for getting contact data from JSONObject
-                JSONObject velostation = velostationDetail.getJSONObject("velostation");
-                // fetch mobile number and store it in arraylist
-
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, naam, lng, lat);
-        recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
-    }
-
-    public String loadJSONFromAsset() {
+    public static String getAssetJsonData(Context context) {
         String json = null;
         try {
-            InputStream is = getAssets().open("users_list.json");
+            InputStream is = context.getAssets().open("velostation.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -83,9 +39,43 @@ public class MainActivity extends Activity {
             ex.printStackTrace();
             return null;
         }
+
+        Log.e("data", json);
         return json;
+
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        try {
+            JSONObject obj = new JSONObject(getAssetJsonData(getApplicationContext()));
+            JSONArray m_jArry = obj.getJSONArray("velostations");
+            ArrayList<HashMap<String, String>> formList = new ArrayList<HashMap<String, String>>();
+            HashMap<String, String> m_li;
+
+            for (int i = 0; i < m_jArry.length(); i++) {
+                JSONObject jo_inside = m_jArry.getJSONObject(i);
+                Log.d("Details-->", jo_inside.getString("naam"));
+                String naam_value = jo_inside.getString("naam");
+                String lat_value = jo_inside.getString("point_lat");
+                String lng_value = jo_inside.getString("point_lng");
+
+                //Add your values in your `ArrayList` as below:
+                m_li = new HashMap<String, String>();
+                m_li.put("lat_value", lat_value);
+                m_li.put("lng_value", lng_value);
+                formList.add(m_li);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ListView listView = findViewById(R.id.veloListView);
+        listView.setAdapter(new ListAdapter(this, lst));
     }
+}
 
 
 

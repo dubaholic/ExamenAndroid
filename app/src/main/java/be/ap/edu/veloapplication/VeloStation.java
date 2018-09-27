@@ -2,15 +2,10 @@ package be.ap.edu.veloapplication;
 
 public class VeloStation {
 
-    private String naam;
-    private String point_lat;
-    private String point_lng;
+    public String naam;
+    public String point_lat;
+    public String point_lng;
 
-    public VeloStation(String naam, String point_lat, String point_lng) {
-        this.naam = naam;
-        this.point_lat = point_lat;
-        this.point_lng = point_lng;
-    }
 
     public String getNaam() {
         return naam;
