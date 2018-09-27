@@ -24,6 +24,21 @@ public class ListAdapter extends BaseAdapter
         veloStations = response.getVeloStations();
     }
     @Override
+    public int getCount()
+    {
+        return veloStations.size();
+    }
+    @Override
+    public VeloStation getItem(int arg0)
+    {
+        return veloStations.get(arg0);
+    }
+    @Override
+    public long getItemId(int arg0)
+    {
+        return 0;
+    }
+    @Override
     public View getView(int arg0, View view, ViewGroup arg2)
     {
         ViewHolder holder = null;
