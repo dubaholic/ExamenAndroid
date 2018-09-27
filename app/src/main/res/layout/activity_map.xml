@@ -6,4 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MapActivity">
 
+    <org.osmdroid.views.MapView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mapview"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true">
+    </org.osmdroid.views.MapView>
+
 </android.support.constraint.ConstraintLayout>
