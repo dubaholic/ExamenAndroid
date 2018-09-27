@@ -2,27 +2,37 @@ package be.ap.edu.veloapplication;
 
 public class VeloStation {
 
-    private double lat;
-    private double lon;
+    private String naam;
+    private String point_lat;
+    private String point_lng;
 
-    public VeloStation(double lat, double lon) {
-        this.lat = lat;
-        this.lon = lon;
+    public VeloStation(String naam, String point_lat, String point_lng) {
+        this.naam = naam;
+        this.point_lat = point_lat;
+        this.point_lng = point_lng;
     }
 
-    public double getLat() {
-        return lat;
+    public String getNaam() {
+        return naam;
     }
 
-    public void setLat(double lat) {
-        this.lat = lat;
+    public void setNaam(String naam) {
+        this.naam = naam;
     }
 
-    public double getLon() {
-        return lon;
+    public String getPoint_lat() {
+        return point_lat;
     }
 
-    public void setLon(double lon) {
-        this.lon = lon;
+    public void setPoint_lat(String point_lat) {
+        this.point_lat = point_lat;
+    }
+
+    public String getPoint_lng() {
+        return point_lng;
+    }
+
+    public void setPoint_lng(String point_lng) {
+        this.point_lng = point_lng;
     }
 }
